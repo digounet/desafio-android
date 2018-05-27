@@ -19,10 +19,16 @@ class MainActivity : BaseActivity(), MainContract.View {
     @Inject
     lateinit var presenter: MainContract.Presenter
 
+    private var twoPane: Boolean = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie_list)
-        setSupportActionBar(main_toolbar)
+        setSupportActionBar(toolbar)
+
+        if (item_detail_container != null) {
+            twoPane = true
+        }
 
         presenter.attachView(this)
         presenter.subscribe()
@@ -38,10 +44,22 @@ class MainActivity : BaseActivity(), MainContract.View {
     }
 
     override fun showMovieDetail(movie: Movie) {
-        val intent = Intent(this, MovieDetailActivity::class.java).apply {
-            putExtra(MovieDetailFragment.ARG_ITEM, movie)
+        if (twoPane) {
+            val fragment = MovieDetailFragment().apply {
+                arguments = Bundle().apply {
+                    putParcelable(MovieDetailFragment.ARG_ITEM, movie)
+                }
+            }
+            supportFragmentManager
+                    .beginTransaction()
+                    .replace(R.id.item_detail_container, fragment)
+                    .commit()
+        } else {
+            val intent = Intent(this, MovieDetailActivity::class.java).apply {
+                putExtra(MovieDetailFragment.ARG_ITEM, movie)
+            }
+            startActivity(intent)
         }
-        startActivity(intent)
     }
 
     override fun updateList(movies: List<Movie>) {

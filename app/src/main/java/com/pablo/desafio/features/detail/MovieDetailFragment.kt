@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.Priority
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -14,11 +15,14 @@ import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 import kotlinx.android.synthetic.main.activity_movie_detail.*
 import kotlinx.android.synthetic.main.movie_detail.*
+import kotlinx.android.synthetic.main.movie_list.*
 
 class MovieDetailFragment : DaggerFragment(), MovieDetailContract.View {
 
     @Inject
     lateinit var presenter: MovieDetailContract.Presenter
+
+    private var imgMovieCap: ImageView? = null
 
     private val glideOptions = RequestOptions()
             .centerCrop()
@@ -35,11 +39,21 @@ class MovieDetailFragment : DaggerFragment(), MovieDetailContract.View {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.movie_detail, container, false)
+        val root = inflater.inflate(R.layout.movie_detail, container, false)
+
+        if (item_detail_container != null) {
+            imgMovieCap = root.findViewById(R.id.imgMovie)
+        }
+
+        return root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        if (imgMovieCap == null) {
+            imgMovieCap = activity?.findViewById(R.id.imgMovie)!!
+        }
 
         arguments?.let {
             if (it.containsKey(ARG_ITEM)) {
@@ -55,7 +69,11 @@ class MovieDetailFragment : DaggerFragment(), MovieDetailContract.View {
         Glide.with(activity)
                 .load(movie.url)
                 .apply(glideOptions)
-                .into(activity?.imgMovie)
+                .into(imgMovieCap)
+
+        if (txtMovieName != null) {
+            txtMovieName.text = movie.name
+        }
 
         txtMovieDescription.text = movie.description
     }
