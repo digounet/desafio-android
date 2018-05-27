@@ -22,9 +22,9 @@ class MovieRemoteDatasource @Inject constructor(val movieService: MovieService):
                 .map { movieList }
     }
 
-    override fun getMovie(id: String): Single<Movie> {
+    override fun getMovie(id: String): Flowable<Movie> {
         return movieService.loadDetail(id)
                 .doOnError { Timber.e(it) }
-                .map { Movie(it._id, it.name, it.description, it.url) }
+                .map { Movie(it.id, it.name, it.description, it.url) }
     }
 }

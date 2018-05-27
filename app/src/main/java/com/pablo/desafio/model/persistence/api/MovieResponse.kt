@@ -1,3 +1,5 @@
 package com.pablo.desafio.model.persistence.api
 
-data class MovieResponse(var id: String, var name: String, var url: String)
+import com.google.gson.annotations.SerializedName
+
+data class MovieResponse(@SerializedName("_id") var id: String, var name: String, var url: String)

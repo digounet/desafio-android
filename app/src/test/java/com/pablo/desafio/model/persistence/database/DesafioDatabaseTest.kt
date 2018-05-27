@@ -40,7 +40,7 @@ class DesafioDatabaseTest {
     @Test
     fun testWriteAndGetById() {
         val movie = Movie("id", "name", "description", "url")
-        mDao.save(movie)
+        mDao.save(listOf(movie))
 
         mDao.getMovie(movie.id).test().assertValue{it.id == movie.id}
     }
@@ -52,8 +52,7 @@ class DesafioDatabaseTest {
         val movie2 = Movie("id2", "name", "description", "url")
         val movie3 = Movie("id3", "name", "description", "url")
 
-        mDao.save(movie2)
-        mDao.save(movie3)
+        mDao.save(listOf(movie2, movie3))
 
         mDao.getMovie(movie2.id).test().assertValue{it.id == movie2.id}
 
@@ -71,8 +70,7 @@ class DesafioDatabaseTest {
         val movie4 = Movie("id4", "name", "description", "url")
         val movie5 = Movie("id5", "name", "description", "url")
 
-        mDao.save(movie4)
-        mDao.save(movie5)
+        mDao.save(listOf(movie4, movie5))
 
         mDao.loadMovies().test().assertValueCount(1)
         mDao.loadMovies().test().assertValue {

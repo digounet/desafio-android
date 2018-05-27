@@ -1,4 +1,4 @@
-package com.pablo.desafio.model
+package com.pablo.desafio
 
 import com.pablo.desafio.model.persistence.api.MovieServiceTest
 import com.pablo.desafio.shared.di.ActivityBuilderModule

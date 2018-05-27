@@ -1,6 +1,5 @@
 package com.pablo.desafio.shared.base
 
-import dagger.android.DaggerActivity
+import dagger.android.support.DaggerAppCompatActivity
 
-open class BaseActivity : DaggerActivity() {
-}
+open class BaseActivity : DaggerAppCompatActivity()

@@ -1,6 +1,6 @@
 package com.pablo.desafio.shared.di
 
-import com.pablo.desafio.features.detail.DetailFragment
+import com.pablo.desafio.features.detail.MovieDetailFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -8,5 +8,5 @@ import dagger.android.ContributesAndroidInjector
 interface FragmentBuilderModule {
 
     @ContributesAndroidInjector
-    fun contributeMovieDetailFragment(): DetailFragment
+    fun contributeMovieDetailFragment(): MovieDetailFragment
 }

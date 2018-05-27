@@ -4,19 +4,22 @@ import com.pablo.desafio.CustomRobolectricTestRunner
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import javax.inject.Inject
 
 @RunWith(CustomRobolectricTestRunner::class)
 class MovieServiceTest {
-    private lateinit var service: MovieService
+
+    @Inject
+    lateinit var service: MovieService
 
     @Before
-    fun setUp() {
-        service = MovieService.create()
+    fun setup() {
+        //val component = DaggerTestComponent().builder()
     }
 
     @Test
     fun testGelAll() {
-        service.loadMovies(1, 10).test()
+        service.loadMovies(0, 3).test()
                 .assertValueCount(1)
     }
 
@@ -24,6 +27,6 @@ class MovieServiceTest {
     fun testGetById() {
         service.loadDetail("59e8ee09f36d280364369ead")
                 .test()
-                .assertValue { it._id.equals("59e8ee09f36d280364369ead") }
+                .assertValue { it.id == "59e8ee09f36d280364369ead" }
     }
 }

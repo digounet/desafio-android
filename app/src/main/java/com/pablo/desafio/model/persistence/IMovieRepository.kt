@@ -6,5 +6,5 @@ import io.reactivex.Single
 
 interface IMovieRepository {
     fun loadMovies(forceRemote: Boolean, page: Int, size: Int): Flowable<List<Movie>>
-    fun getMovie(forceRemote: Boolean, id: String): Single<Movie>
+    fun getMovie(forceRemote: Boolean, id: String): Flowable<Movie>
 }

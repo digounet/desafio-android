@@ -11,5 +11,5 @@ interface MovieService {
     fun loadMovies(@Query("page") page: Int, @Query("size") size: Int): Flowable<List<MovieResponse>>
 
     @GET("movies/detail/{id}")
-    fun loadDetail(@Path("id") id: String): Single<MovieDetailResponse>
+    fun loadDetail(@Path("id") id: String): Flowable<MovieDetailResponse>
 }

@@ -7,9 +7,11 @@ import io.reactivex.Single
 interface IMovieLocalDatasource {
     fun loadMovies(): Flowable<List<Movie>>
 
-    fun getMovie(id: String): Single<Movie>
+    fun getMovie(id: String): Flowable<Movie>
 
     fun deleteAll()
 
     fun saveMovies(movies: List<Movie>)
+
+    fun updateMovie(movie: Movie)
 }

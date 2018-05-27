@@ -24,7 +24,7 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 
-@Module
+@Module(includes = [(PresenterModule::class)])
 class AppModule {
     @Provides
     @Singleton

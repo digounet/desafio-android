@@ -40,6 +40,8 @@ dependencies {
     implementation "com.google.dagger:dagger-android:$daggerVersion"
     implementation "com.google.dagger:dagger-android-support:$daggerVersion"
     implementation 'com.android.support:support-v4:27.1.1'
+    implementation 'com.android.support:recyclerview-v7:27.1.1'
+    implementation 'com.android.support:design:27.1.1'
     kapt "com.google.dagger:dagger-compiler:$daggerVersion"
     kapt "com.google.dagger:dagger-android-processor:$daggerVersion"
 
@@ -76,4 +78,6 @@ dependencies {
 
     testImplementation "android.arch.core:core-testing:1.1.1"
     testImplementation "android.arch.persistence.room:testing:1.1.0"
+
+    androidTestImplementation 'com.google.dagger:dagger-compiler:2.13'
 }

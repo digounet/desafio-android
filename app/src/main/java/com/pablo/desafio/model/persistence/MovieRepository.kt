@@ -4,7 +4,6 @@ import com.pablo.desafio.model.data.Movie
 import com.pablo.desafio.model.persistence.datasource.local.IMovieLocalDatasource
 import com.pablo.desafio.model.persistence.datasource.remote.IMovieRemoteDatasource
 import io.reactivex.Flowable
-import io.reactivex.Single
 import javax.inject.Inject
 
 class MovieRepository @Inject constructor(private val movieLocalDatasource: IMovieLocalDatasource, private val movieRemoteDatasource: IMovieRemoteDatasource) : IMovieRepository {
@@ -12,7 +11,7 @@ class MovieRepository @Inject constructor(private val movieLocalDatasource: IMov
         return if (forceRemote) {
             loadFromRemote(page, size)
         } else {
-            movieLocalDatasource.loadMovies()
+            movieLocalDatasource.loadMovies().take(1)
         }
     }
 
@@ -30,11 +29,20 @@ class MovieRepository @Inject constructor(private val movieLocalDatasource: IMov
         movieLocalDatasource.saveMovies(movies)
     }
 
-    override fun getMovie(forceRemote: Boolean, id: String): Single<Movie> {
+    override fun getMovie(forceRemote: Boolean, id: String): Flowable<Movie> {
         return if (forceRemote) {
-            movieLocalDatasource.getMovie(id)
-        } else {
             movieRemoteDatasource.getMovie(id)
+                    .doOnEach {
+                        if (it.value != null) {
+                            updateMovie(it.value!!)
+                        }
+                    }
+        } else {
+            movieLocalDatasource.getMovie(id).take(1)
         }
+    }
+
+    private fun updateMovie(movie: Movie) {
+        movieLocalDatasource.updateMovie(movie)
     }
 }
